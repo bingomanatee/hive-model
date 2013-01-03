@@ -1,0 +1,28 @@
+{
+	"name":            "hive-model",
+	"version":         "0.0.1",
+	"description":     "A local-memory model/database system for storing and retrieving object based data",
+	"main":            "index.js",
+	"dependencies":    {
+		"hive-component": "*",
+		"underscore":     "~1.4.3",
+		"tap":            "*",
+		"gate":           "*",
+		"support":        "*"
+	},
+	"devDependencies": {},
+	"scripts":         {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository":      {
+		"type": "git",
+		"url":  "git://github.com/bingomanatee/hive-model.git"
+	},
+	"keywords":        [
+		"model",
+		"node",
+		"hive"
+	],
+	"author":          "Dave Edelhart",
+	"license":         "BSD"
+}
