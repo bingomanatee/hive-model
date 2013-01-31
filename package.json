@@ -1,6 +1,6 @@
 {
 	"name":            "hive-model",
-	"version":         "0.0.1a",
+	"version":         "0.0.1b",
 	"description":     "A local-memory model/database system for storing and retrieving object based data",
 	"main":            "index.js",
 	"dependencies":    {

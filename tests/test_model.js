@@ -45,6 +45,15 @@ var _model_bar_mixin = {
 
 }
 
+var alpha = 'abcdefghijklmnopqrstuvwxyz'.split('');
+var word = function () {
+	var letters = [];
+	do {
+		letters.push(_.shuffle(alpha).slice(0, 2))
+	} while (Math.random() > 0.25);
+	return _.flatten(letters).join('').slice(0, 8);
+};
+
 var dataspace = Dataspace();
 
 tap.test('query_obj', function (t) {
@@ -148,15 +157,6 @@ if (true) {
 	});
 }
 
-var alpha = 'abcdefghijklmnopqrstuvwxyz'.split('');
-var word = function () {
-	var letters = [];
-	do {
-		letters.push(_.shuffle(alpha).slice(0, 2))
-	} while (Math.random() > 0.25);
-	return _.flatten(letters).join('').slice(0, 8);
-};
-
 tap.test('dump data', function (t) {
 
 	function _make_dumper_data() {
@@ -224,4 +224,35 @@ tap.test('dump data', function (t) {
 
 		)
 	})
+});
+
+tap.test('make pk', function (t) {
+
+	var index_me_model = Model({
+		name: 'to_index'
+	}, {}, dataspace);
+
+	var out = index_me_model.put({name: 'foo'});
+
+	t.equal(out.id, 1, 'first record id is one');
+
+	var retrieved = index_me_model.get(1);
+	t.equal(retrieved.name, 'foo', 'first record name is foo');
+
+	out = index_me_model.put({name: 'bar'});
+
+	t.equal(out.id, 2, 'second record is bar');
+
+	retrieved = index_me_model.get(2);
+	t.equal(retrieved.name, 'bar', 'second record name is bar');
+
+	out = index_me_model.put({id: 5, name: 'rick'});
+
+	t.equal(out.id, 5, 'put record with known id 5 in');
+	retrieved = index_me_model.get(5);
+	t.equal(retrieved.name, 'rick', 'record 5 is rick');
+
+
+	t.end();
+
 });
