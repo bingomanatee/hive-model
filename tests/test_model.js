@@ -252,7 +252,39 @@ tap.test('make pk', function (t) {
 	retrieved = index_me_model.get(5);
 	t.equal(retrieved.name, 'rick', 'record 5 is rick');
 
-
 	t.end();
+
+});
+
+tap.test('update', function (t) {
+
+	var updatMe = Model({
+		name: 'toUpdate', data: [
+			{id: 1, name: 'foo'} ,
+			{id: 2, name: 'bar'} ,
+			{id: 3, name: 'vey'}
+		]
+	}, {}, dataspace, function(){
+
+		//console.log('updatMe index: %s', util.inspect(updatMe._index));
+		t.equal(updatMe.count(), 3);
+
+		updatMe.get(1, function(err, record){
+			//console.log('got record ID: %s, %s ', util.inspect(err), util.inspect(record));
+			t.equal(record.id, 1);
+			t.equal(record.name, 'foo');
+		//	console.log('updating %s', util.inspect(record));
+
+			updatMe.update_record(1, {name: 'ron'}, function(){
+
+				t.equal(updatMe.count(), 3, '3 records in update db');
+				updatMe.get(1, function(err, r2){
+					t.equal(r2.name, 'ron', 'record name is now ron');
+					t.end();
+				});
+
+			});
+		});
+	});
 
 });
